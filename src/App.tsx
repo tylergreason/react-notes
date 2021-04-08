@@ -3,7 +3,7 @@ import Notes from './Components/Notes/Notes';
 import styled from 'styled-components'
 import About from './Components/About/About'
 import Navbar from './Components/Navbar/Navbar';
-import { BrowserRouter as Router, Switch, Link,  Route } from 'react-router-dom';
+import { BrowserRouter as Router, Switch,  Route } from 'react-router-dom';
 
 const Main = styled.main`
   background-color: paleturquoise;
