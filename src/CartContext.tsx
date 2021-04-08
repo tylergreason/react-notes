@@ -3,12 +3,7 @@ import cartReducer from './cartReducer';
 
 export const CartContext = React.createContext({} as {cart: any, dispatch: any});
 
-interface IContextProps {
-  cart: any,
-  dispatch: any
-}
-
-const initialCart: any[] = JSON.parse(sessionStorage.getItem('cart') || '[]');
+const initialCart: any[] = JSON.parse(localStorage.getItem('cart') || '[]');
 
 export function CartProvider(props: any) {
   const [cart, dispatch] = useReducer(cartReducer, initialCart);

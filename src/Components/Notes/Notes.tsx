@@ -2,11 +2,7 @@ import React, {SyntheticEvent, useState, useEffect } from 'react';
 import { useCart } from '../../CartContext';
 import Note from '../Note/Note';
 import styled from 'styled-components';
-
-interface IItemInterface {
-  text: string,
-  lastUpdated: Date 
-}
+import { INote } from '../../Common/Interfaces'
 
 const NotesWrapper = styled.div`
   margin: auto;
@@ -28,7 +24,7 @@ export default function Notes(props:any) {
   const handleSubmit = (e: SyntheticEvent<HTMLFormElement>) => {
     e.preventDefault(); 
     if (inputValue.trim().length) {
-      const newItem: IItemInterface = {text: inputValue, lastUpdated: new Date()}      
+      const newItem: INote = {text: inputValue, lastUpdated: new Date()}      
       dispatch({type: 'add', item: newItem});
       setInputValue('');  
     }
@@ -68,7 +64,7 @@ export default function Notes(props:any) {
           
               <h2>Notes</h2>
             <ul>
-              {cart.map((item: IItemInterface, idx: number)=> {
+              {cart.map((item: INote, idx: number)=> {
                 return (
                     <Note 
                     note={item} 

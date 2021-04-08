@@ -1,0 +1,1 @@
+export type { INote } from './INote.interface';

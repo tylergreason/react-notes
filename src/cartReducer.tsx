@@ -1,10 +1,12 @@
+import { INote } from './Common/Interfaces';
+
 interface ActionInterface  {
     type: string,
-    item?: string
+    item?: INote
 }
 
 function updateStorage(cart: any) {
-  sessionStorage.setItem('cart', JSON.stringify(cart));
+  localStorage.setItem('cart', JSON.stringify(cart));
 }
 
 // a pure function that returns the new cart state depending on the action string
