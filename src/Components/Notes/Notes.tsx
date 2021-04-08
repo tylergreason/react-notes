@@ -12,10 +12,19 @@ const NotesWrapper = styled.div`
   align-items: center;
 `
 
-const NoteInput = styled.textarea`
-  /* min-width: 75vw;
-  height: 2rem; */
-`
+const NoteInput = styled.textarea``
+
+function applyId(notes: INote[]) {
+  console.log(notes);
+  const length = notes.length;
+  if (length) {
+    const lastId: number = notes[length - 1]?.id;
+
+    return lastId + 1 || 0;
+  }
+  
+  return 0;
+}
 
 export default function Notes(props:any) {
   const {cart, dispatch} = useCart();
@@ -24,7 +33,7 @@ export default function Notes(props:any) {
   const handleSubmit = (e: SyntheticEvent<HTMLFormElement>) => {
     e.preventDefault(); 
     if (inputValue.trim().length) {
-      const newItem: INote = {text: inputValue, lastUpdated: new Date()}      
+      const newItem: INote = {text: inputValue, lastUpdated: new Date(), id: applyId(cart)}      
       dispatch({type: 'add', item: newItem});
       setInputValue('');  
     }

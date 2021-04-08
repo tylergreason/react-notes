@@ -1,4 +1,5 @@
 export interface INote {
   text: string,
-  lastUpdated: Date
+  lastUpdated: Date,
+  id: number
 }
