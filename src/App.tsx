@@ -1,18 +1,19 @@
 import './App.css';
 import Notes from './Components/Notes/Notes';
-import { CartContext } from './CartContext';
-import { useReducer } from 'react';
-import cartReducer from './cartReducer';
-
-const initialCart: [] = [];
+import styled from 'styled-components'
 
 function App() {
-  const [cart, dispatch] = useReducer(cartReducer, initialCart);
+  const Main = styled.main`
+    background-color: paleturquoise;
+    width: 100vw;
+    height: 100vh;
+    padding: 2rem;
+  `
+
   return (
-    <CartContext.Provider value ={null}>
-      This is TypeScript in React!
+    <Main>
       <Notes></Notes>
-      </CartContext.Provider>
+    </Main>
   );
 }
 

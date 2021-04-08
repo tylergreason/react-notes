@@ -1,8 +1,13 @@
-import react from 'react';
+import {formatDate} from '../../Common/helperFunctions';
 
-function Note(props:any) {
+function Note(props:any) {    
   return <div>
-      {props.name}
+    <button
+      onClick={props.deleteFunction}
+    >
+      X
+    </button>
+      {props.note.text} {formatDate(new Date(props.note.lastUpdated))}
     </div>
 }
 
