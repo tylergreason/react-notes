@@ -1,6 +1,8 @@
 import './App.css';
 import Notes from './Components/Notes/Notes';
 import styled from 'styled-components'
+import About from './Components/About/About'
+import Navbar from './Components/Navbar/Navbar';
 import { BrowserRouter as Router, Switch, Link,  Route } from 'react-router-dom';
 
 const Main = styled.main`
@@ -15,8 +17,11 @@ function App() {
   return (
     <Main>
       <Router>
-        <Link to="/">Home</Link>
+        <Navbar></Navbar>
         <Switch>
+          <Route path="/about">
+            <About></About>
+          </Route>
           <Route path="/">
             <Notes></Notes>
           </Route>
