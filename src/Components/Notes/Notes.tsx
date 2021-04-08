@@ -30,19 +30,45 @@ export default function Notes(props:any) {
   const {cart, dispatch} = useCart();
   const [inputValue, setInputValue] = useState('');
   const [mode, setMode] = useState('add');
+  const [noteToEdit, setNoteToEdit] = useState({
+    text: '',
+    lastUpdated: new Date(),
+    created: new Date(),
+    id: -1
+  })
   
 
   function editNote(note: INote) {
     setMode('edit');
+    setNoteToEdit(note);
     setInputValue(note.text);
+  }
+
+  function quitEdit() {
+    setInputValue('');
+    setMode('add');
   }
 
   const handleSubmit = (e: SyntheticEvent<HTMLFormElement>) => {
     e.preventDefault(); 
-    if (inputValue.trim().length) {
-      const newItem: INote = {text: inputValue, lastUpdated: new Date(), id: applyId(cart)}      
-      dispatch({type: 'add', item: newItem});
-      setInputValue('');  
+    if (mode === 'add' && inputValue.trim().length) {
+        const newItem: INote = {
+          text: inputValue,
+          lastUpdated: new Date(),
+          created: new Date(),
+          id: applyId(cart)
+        }      
+        dispatch({type: 'add', item: newItem});
+        setInputValue('');  
+    } else if (mode === 'edit') {
+        const updatedNote: INote = {
+          text: inputValue,
+          lastUpdated: new Date(),
+          created: noteToEdit.created,
+          id: noteToEdit.id
+        }
+        quitEdit()
+        dispatch({type: 'edit', item: updatedNote});
     }
   }
 
@@ -53,15 +79,12 @@ export default function Notes(props:any) {
     setInputValue(e.currentTarget.value);
   }
 
-  function deleteFunction(note: any) {
+  function deleteNote(note: any) {
+    quitEdit();
     dispatch({type: 'delete', item: note})
   }
-
+  
   function cancelButton() {
-    function quitEdit() {
-      setInputValue('');
-      setMode('add');
-    }
     if (mode === 'edit') {
       return (
         <ConfigureButton onClick={() => quitEdit()}>
@@ -98,7 +121,7 @@ export default function Notes(props:any) {
                 return (
                     <Note 
                     note={note} 
-                    deleteFunction={() => deleteFunction(note)}
+                    deleteNote={() => deleteNote(note)}
                     editFunction={editNote}
                     key={note.id}
                     >

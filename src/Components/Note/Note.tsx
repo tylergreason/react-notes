@@ -1,10 +1,11 @@
 import {formatDate} from '../../Common/helperFunctions';
 
+
 function Note(props:any) {
   const note = props.note;
   return <div>
     <button
-      onClick={props.deleteFunction}
+      onClick={props.deleteNote}
     >
       X
     </button>
