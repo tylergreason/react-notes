@@ -16,6 +16,10 @@ const ConfigureButton = styled.button`
 `
 const NoteInput = styled.textarea``
 
+const NotesList = styled.ul`
+  display: flex;
+  flex-flow: row wrap;
+`
 
 function applyId(notes: INote[]) {
   const length = notes.length;
@@ -32,8 +36,8 @@ export default function Notes(props:any) {
   const [mode, setMode] = useState('add');
   const [noteToEdit, setNoteToEdit] = useState({
     text: '',
-    lastUpdated: new Date(),
-    created: new Date(),
+    lastUpdated: new Date().toString(),
+    created: new Date().toString(),
     id: -1
   })
   
@@ -54,8 +58,8 @@ export default function Notes(props:any) {
     if (mode === 'add' && inputValue.trim().length) {
         const newItem: INote = {
           text: inputValue,
-          lastUpdated: new Date(),
-          created: new Date(),
+          lastUpdated: new Date().toString(),
+          created: new Date().toString(),
           id: applyId(cart)
         }      
         dispatch({type: 'add', item: newItem});
@@ -63,7 +67,7 @@ export default function Notes(props:any) {
     } else if (mode === 'edit') {
         const updatedNote: INote = {
           text: inputValue,
-          lastUpdated: new Date(),
+          lastUpdated: new Date().toString(),
           created: noteToEdit.created,
           id: noteToEdit.id
         }
@@ -82,6 +86,11 @@ export default function Notes(props:any) {
   function deleteNote(note: any) {
     quitEdit();
     dispatch({type: 'delete', item: note})
+  }
+
+  function emptyCart() {
+    quitEdit();
+    dispatch({type:'empty'})
   }
   
   function cancelButton() {
@@ -113,10 +122,10 @@ export default function Notes(props:any) {
       {cancelButton()}
     </form>
       <br></br>
-    <button onClick={() => dispatch({type: 'empty'})}>Emtpy cart</button>
+    <button onClick={() => emptyCart()}>Emtpy cart</button>
           
               <h2>Notes</h2>
-            <ul>
+            <NotesList>
               {cart.map((note: INote, idx: number)=> {
                 return (
                     <Note 
@@ -128,7 +137,7 @@ export default function Notes(props:any) {
                     </Note>
                 )
               })}
-            </ul>
+            </NotesList>
     </NotesWrapper>
   )
   
