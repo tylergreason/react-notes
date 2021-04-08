@@ -11,24 +11,31 @@ const NotesWrapper = styled.div`
   justify-content: center;
   align-items: center;
 `
-
+const ConfigureButton = styled.button`
+  text-transform: capitalize;
+`
 const NoteInput = styled.textarea``
 
+
 function applyId(notes: INote[]) {
-  console.log(notes);
   const length = notes.length;
   if (length) {
     const lastId: number = notes[length - 1]?.id;
-
     return lastId + 1 || 0;
   }
-  
   return 0;
 }
 
 export default function Notes(props:any) {
   const {cart, dispatch} = useCart();
   const [inputValue, setInputValue] = useState('');
+  const [mode, setMode] = useState('add');
+  
+
+  function editNote(note: INote) {
+    setMode('edit');
+    setInputValue(note.text);
+  }
 
   const handleSubmit = (e: SyntheticEvent<HTMLFormElement>) => {
     e.preventDefault(); 
@@ -50,6 +57,20 @@ export default function Notes(props:any) {
     dispatch({type: 'delete', item: note})
   }
 
+  function cancelButton() {
+    function quitEdit() {
+      setInputValue('');
+      setMode('add');
+    }
+    if (mode === 'edit') {
+      return (
+        <ConfigureButton onClick={() => quitEdit()}>
+          Cancel
+        </ConfigureButton>
+      )
+    }
+  }
+
   return (
     <NotesWrapper>
     <form onSubmit={handleSubmit}>
@@ -63,22 +84,23 @@ export default function Notes(props:any) {
       >
       </NoteInput>
         <br></br>
-      <button type="submit">
-        Submit
-      </button>
+      <ConfigureButton type="submit">
+        {mode}
+      </ConfigureButton>
+      {cancelButton()}
     </form>
       <br></br>
-    
     <button onClick={() => dispatch({type: 'empty'})}>Emtpy cart</button>
           
               <h2>Notes</h2>
             <ul>
-              {cart.map((item: INote, idx: number)=> {
+              {cart.map((note: INote, idx: number)=> {
                 return (
                     <Note 
-                    note={item} 
-                    deleteFunction={() => deleteFunction(item)}
-                    key={idx}
+                    note={note} 
+                    deleteFunction={() => deleteFunction(note)}
+                    editFunction={editNote}
+                    key={note.id}
                     >
                     </Note>
                 )

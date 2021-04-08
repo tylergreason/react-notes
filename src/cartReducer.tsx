@@ -21,7 +21,9 @@ switch (action.type) {
     return newCart;
     }
   case "delete": {
-    return cart.filter((ele: any) => JSON.stringify(ele) !== JSON.stringify(action.item))
+    const newCart = cart.filter((ele: INote) => ele.id !== action.item?.id);
+    updateStorage(newCart);
+    return newCart;
   }
     default: 
       throw new Error('Unhandled action '  + action.type);

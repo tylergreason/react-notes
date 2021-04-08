@@ -1,13 +1,16 @@
 import {formatDate} from '../../Common/helperFunctions';
 
-function Note(props:any) {    
+function Note(props:any) {
+  const note = props.note;
   return <div>
     <button
       onClick={props.deleteFunction}
     >
       X
     </button>
-      {props.note.text} {formatDate(new Date(props.note.lastUpdated))}
+    <div onClick={() => props.editFunction(note)}>
+      {note.id} - {note.text} ({formatDate(new Date(note.lastUpdated))})
+    </  div>
     </div>
 }
 
